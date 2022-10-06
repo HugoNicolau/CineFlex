@@ -4,12 +4,14 @@ import NavBar from "./NavBar";
 import Movie from "./Movie";
 import Session from "./Session";
 import Success from "./Success";
+import GlobalStyle from "./GlobalStyle";
 
 
 export default function App(){
 
     return(
         <BrowserRouter>
+        <GlobalStyle/>
         <NavBar/>
         <Routes>
 
@@ -18,7 +20,8 @@ export default function App(){
         <Route path="/session" element={<Session/>}/>
         <Route path="/success" element={<Success/>}/>
 
-        </Routes>      
+        </Routes>    
+
         </BrowserRouter>
     )
 }
