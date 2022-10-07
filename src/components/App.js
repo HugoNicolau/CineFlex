@@ -16,7 +16,7 @@ export default function App(){
         <Routes>
 
         <Route path="/" element={<MainScreen/>}/>
-        <Route path="/movie" element={<Movie/>}/>
+        <Route path="/movie/:idMovie" element={<Movie/>}/>
         <Route path="/session" element={<Session/>}/>
         <Route path="/success" element={<Success/>}/>
 

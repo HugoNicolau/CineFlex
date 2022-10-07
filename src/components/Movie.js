@@ -1,11 +1,18 @@
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Movie(props){
 
+    const params = useParams();
+
+    console.log(params.idMovie)
+    
     const {id, title, img, overview, releaseDate} = props;
     return(
         <OneMovie>
+            <Link to={`/movie/${id}`}>
         <img src={img} alt={title}/>
+        </Link>
         </OneMovie>
     )
 }

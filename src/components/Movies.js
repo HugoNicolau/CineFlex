@@ -16,6 +16,10 @@ export default function Movies(){
         promise.then((res) => {
             setMoviesList(res.data)
         })
+
+        promise.catch((err) => {
+            console.log(err.response.data)
+        })
     },[]);
 
 
