@@ -1,13 +1,27 @@
 import Movie from "./Movie"
-import Filmes from "./mock"
 import styled from "styled-components"
-
+import { useState } from "react"
+import { useEffect } from "react"
+import axios from "axios"
 
 export default function Movies(){
 
+    const [moviesList, setMoviesList] = useState([])
+
+    useEffect(() => {
+        const URL = "https://mock-api.driven.com.br/api/v8/cineflex/movies"
+
+        const promise = axios.get(URL);
+
+        promise.then((res) => {
+            setMoviesList(res.data)
+        })
+    },[]);
+
+
     return(
         <AllMovies>
-        {Filmes.map((f) => <Movie id={f.id} title={f.title} img={f.posterURL} overview={f.overview} release={f.releaseDate}/>)}
+        {moviesList.map((f) => <Movie id={f.id} title={f.title} img={f.posterURL} overview={f.overview} release={f.releaseDate}/>)}
         </AllMovies>
     )
 }
