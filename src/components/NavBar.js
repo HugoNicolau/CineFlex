@@ -8,7 +8,8 @@ export default function NavBar(){
 }
 
 const Bar = styled.div`
-width: 375px;
+position:fixed;
+width: 100%;
 height: 67px;
 left: 0px;
 top: 0px;
