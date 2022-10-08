@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import Schedule from "./Schedule";
+import loading from "./img/loading-gif.gif"
 
 export default function Movie() {
   const { idMovie } = useParams();
@@ -22,8 +23,14 @@ export default function Movie() {
   }, []);
 
   //   const { id, title, img, overview, releaseDate } = props;
-  console.log(movie, "Movie");
-  console.log(movie[0], "day0");
+  if(movie.length === 0){
+
+    return(
+      <Load>
+      <img src={loading} alt="loading"/>
+      </Load>
+    )
+  }
 
   return (
     <SecondScreen>
@@ -31,16 +38,17 @@ export default function Movie() {
       <BoxSchedule>
         {movie.map((m) => {
           return (
-            <>
+            <EachSchedule key={m.id}>
               <h1>
                 {m.weekday} - {m.date}
               </h1>
+
               <div>
-              {m.showtimes.map((s) => (
-                <OrangeBox>{s.name}</OrangeBox>
-              ))}
+                {m.showtimes.map((s) => (
+                  <OrangeBox key={s.id}>{s.name}</OrangeBox>
+                ))}
               </div>
-            </>
+            </EachSchedule>
           );
         })}
       </BoxSchedule>
@@ -54,8 +62,8 @@ const SecondScreen = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  text-align:center;
-  justify-content:start;
+  text-align: center;
+  justify-content: start;
   margin: 0px;
   padding: 0px;
   padding-top: 100px;
@@ -71,13 +79,27 @@ const SecondScreen = styled.div`
 `;
 
 const OrangeBox = styled.button`
-  
   color: white;
   width: 83px;
   height: 43px;
   background: #e8833a;
   border-radius: 3px;
-  margin-right:8px;
+  margin-right: 8px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  border-color: #E8833A;
+
+  &:hover{
+    background: #c45c12;
+    cursor:pointer;
+  }
+;
 `;
 
 const BoxSchedule = styled.div`
@@ -88,15 +110,39 @@ const BoxSchedule = styled.div`
   font-size: 20px;
   line-height: 23px;
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   /* align-items: center; */
-  align-items:flex-start;
+  align-items: flex-start;
   letter-spacing: 0.02em;
   color: #293845;
   padding-left: 23px;
-  row-gap:22px;
-
-  div{
-
-  }
+  row-gap: 22px;
 `;
+
+const EachSchedule = styled.div`
+  display: flex;
+  align-items: flex-start;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  display: flex;
+  letter-spacing: 0.02em;
+  color: #293845;
+  flex-direction: column;
+  row-gap: 23px;
+`;
+
+const Load = styled.div`
+
+height:auto;
+align-items:center;
+display:flex;
+justify-content:center;
+height:100vw;
+width: 100vw;;
+img{
+  width:50px;
+}
+`

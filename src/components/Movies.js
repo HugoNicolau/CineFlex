@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import loading from "./img/loading-gif.gif"
 
 export default function Movies() {
   const [moviesList, setMoviesList] = useState([]);
@@ -21,6 +22,14 @@ export default function Movies() {
       console.log(err.response.data);
     });
   }, []);
+
+  if(moviesList.length===0){
+    return (
+      <Loading>
+      <img src={loading} alt="loading"/>
+      </Loading>
+    )
+  }
 
   return (
     <AllMovies>
@@ -52,3 +61,6 @@ const AllMovies = styled.div`
   row-gap: 11px;
 `;
 
+const Loading = styled.div`
+margin-top:100px;
+`
