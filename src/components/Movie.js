@@ -19,7 +19,7 @@ export default function Movie() {
     promise.catch((err) => {
       console.log(err.response.data, "erro");
     });
-  }, []);
+  }, [idMovie]);
 
   //   const { id, title, img, overview, releaseDate } = props;
   if (movie.length === 0) {
