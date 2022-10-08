@@ -35,10 +35,11 @@ export default function Movie() {
               <h1>
                 {m.weekday} - {m.date}
               </h1>
-
+              <div>
               {m.showtimes.map((s) => (
                 <OrangeBox>{s.name}</OrangeBox>
               ))}
+              </div>
             </>
           );
         })}
@@ -53,7 +54,8 @@ const SecondScreen = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  text-align:center;
+  justify-content:start;
   margin: 0px;
   padding: 0px;
   padding-top: 100px;
@@ -64,10 +66,7 @@ const SecondScreen = styled.div`
   font-size: 24px;
   line-height: 28px;
   display: flex;
-  align-items: center;
-  text-align: center;
   letter-spacing: 0.04em;
-
   color: #293845;
 `;
 
@@ -78,6 +77,7 @@ const OrangeBox = styled.button`
   height: 43px;
   background: #e8833a;
   border-radius: 3px;
+  margin-right:8px;
 `;
 
 const BoxSchedule = styled.div`
@@ -89,7 +89,14 @@ const BoxSchedule = styled.div`
   line-height: 23px;
   display: flex;
   flex-direction:column;
-  align-items: center;
+  /* align-items: center; */
+  align-items:flex-start;
   letter-spacing: 0.02em;
   color: #293845;
+  padding-left: 23px;
+  row-gap:22px;
+
+  div{
+
+  }
 `;
