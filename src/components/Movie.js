@@ -2,15 +2,14 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import Schedule from "./Schedule";
-import loading from "./img/loading-gif.gif"
+import loading from "./img/loading-gif.gif";
 
 export default function Movie() {
   const { idMovie } = useParams();
   const [movie, setMovie] = useState([]);
 
   useEffect(() => {
-    URL = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${idMovie}/showtimes`;
+   const URL = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${idMovie}/showtimes`;
     const promise = axios.get(URL);
 
     promise.then((res) => {
@@ -23,13 +22,12 @@ export default function Movie() {
   }, []);
 
   //   const { id, title, img, overview, releaseDate } = props;
-  if(movie.length === 0){
-
-    return(
+  if (movie.length === 0) {
+    return (
       <Load>
-      <img src={loading} alt="loading"/>
+        <img src={loading} alt="loading" />
       </Load>
-    )
+    );
   }
 
   return (
@@ -45,7 +43,12 @@ export default function Movie() {
 
               <div>
                 {m.showtimes.map((s) => (
-                  <OrangeBox key={s.id}>{s.name}</OrangeBox>
+                  
+                    <Link key={s.id} to={`/session/${s.id}`}>
+                  <OrangeBox >
+                    {s.name}
+                  </OrangeBox>
+                    </Link>
                 ))}
               </div>
             </EachSchedule>
@@ -93,13 +96,12 @@ const OrangeBox = styled.button`
   text-align: center;
   letter-spacing: 0.02em;
   color: #ffffff;
-  border-color: #E8833A;
+  border-color: #e8833a;
 
-  &:hover{
+  &:hover {
     background: #c45c12;
-    cursor:pointer;
+    cursor: pointer;
   }
-;
 `;
 
 const BoxSchedule = styled.div`
@@ -135,14 +137,13 @@ const EachSchedule = styled.div`
 `;
 
 const Load = styled.div`
-
-height:auto;
-align-items:center;
-display:flex;
-justify-content:center;
-height:100vw;
-width: 100vw;;
-img{
-  width:50px;
-}
-`
+  height: auto;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 100vw;
+  width: 100vw;
+  img {
+    width: 50px;
+  }
+`;
