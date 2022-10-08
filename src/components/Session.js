@@ -32,8 +32,23 @@ export default function Session() {
     setSelectedButtons(newArray);
   }
 
-  function buyTicket(){
+  function buyTicket(e){
+    e.preventDefault()
+    const URL = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many"
+    const body = {
+        ids: selectedButtons,
+        name: buyerName,
+        cpf: buyerCPF
+    }
 
+    const promise = axios.post(URL, body)
+    
+    promise.then((res) => {
+        console.log(res.data)
+    })
+    promise.catch((err) => {
+        console.log(err.response.data)
+    })
   }
 
   return (
@@ -78,9 +93,9 @@ export default function Session() {
       <Buy>
         <form onSubmit={buyTicket}>
           <label htmlFor="nameField">Nome do comprador:</label>
-          <input type="text" id="nameField"  placeholder="Digite seu nome..." required/>
+          <input type="text" id="nameField" value={buyerName} onChange={e => setBuyerName(e.target.value)} placeholder="Digite seu nome..." required/>
           <label htmlFor="cpfField">CPF do comprador:</label>
-          <input type="text" pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" id="cpfField" placeholder="Digite seu CPF..." required/>
+          <input type="text" pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" id="cpfField" value={buyerCPF} onChange={e => setBuyerCPF(e.target.value)} placeholder="Digite seu CPF..." required/>
           <br />
           <button type="submit">Reservar assento(s)</button>
         </form>
@@ -267,6 +282,10 @@ const Buy = styled.section`
     margin-right:auto;
     border:none;
     margin-top:57px;
+    &:hover{
+        cursor:pointer;
+        background-color:#fc9a55;
+    }
 
   }
 `;
