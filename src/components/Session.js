@@ -4,45 +4,64 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Session() {
+  const [sessionTickets, setSessionTickets] = useState([]);
+  const params = useParams();
+  console.log(params);
 
-    const [sessionTickets, setSessionTickets] = useState([])
-    const params = useParams();
-    console.log(params)
+  useEffect(() => {
+    const URL = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${params.idSession}/seats`;
 
-    useEffect(() =>{
-        const URL = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${params.idSession}/seats`
-        
-        const promise = axios.get(URL);
-        promise.then( (res) => {
-            setSessionTickets(res.data.seats)
-        })
-        promise.catch((err) => {
-            console.log(err.response.data)
-        })
-
-    }, [])
-
-
+    const promise = axios.get(URL);
+    promise.then((res) => {
+      setSessionTickets(res.data.seats);
+      console.log(res.data.seats);
+    });
+    promise.catch((err) => {
+      console.log(err.response.data);
+    });
+  }, []);
 
   return (
     <ContentBox>
       <h1>Selecione o(s) assento(s)</h1>
       <div>
-    {sessionTickets.map((s) => {
-        return(
-
-            <button key={s.id}><h2>{s.name}</h2></button>
-        )
-
-    })}
+        {sessionTickets.map((s) => {
+          if (s.isAvailable)
+            return (
+              <TicketButton isPossible={s.isAvailable} key={s.id}>
+                {s.id < 10 ? <h2>0{s.name}</h2> : <h2>{s.name}</h2>}
+              </TicketButton>
+            );
+          else {
+            return (
+              <TicketButton isPossible={s.isAvailable} key={s.id}>
+                {s.id < 10 ? <h2>0{s.name}</h2> : <h2>{s.name}</h2>}
+              </TicketButton>
+            );
+          }
+        })}
       </div>
+      <BoxButtonDiv>
+        <BoxButton option={"selected"}>
+          <button />
+          <h3>Selecionado</h3>
+        </BoxButton>
+        <BoxButton option={"available"}>
+          <button />
+          <h3>Disponível</h3>
+        </BoxButton>
+        <BoxButton option={"unavailable"}>
+          <button />
+          <h3>Indisponível</h3>
+        </BoxButton>
+      </BoxButtonDiv>
     </ContentBox>
   );
 }
 
 const ContentBox = styled.div`
   margin-top: 70px;
-  
+
   /* background-color: green; */
   h1 {
     margin-top: 100px;
@@ -61,42 +80,81 @@ const ContentBox = styled.div`
     color: #293845;
   }
   div {
-    margin-top:30px;
-    display:flex;
+    margin-top: 30px;
+    display: flex;
     flex-wrap: wrap;
-    margin-left:24px;
-    margin-right:24px;
-    column-gap:7px;
-    row-gap:18px;
-
+    margin-left: 24px;
+    margin-right: 24px;
+    column-gap: 7px;
+    row-gap: 18px;
   }
+`;
+
+const TicketButton = styled.button`
+  width: 26px;
+  height: 26px;
+  left: 24px;
+  top: 158px;
+  background-color: ${(props) =>
+    props.isPossible === true ? "#c3cfd9" : "#FBE192"};
+  border: 1px solid
+    ${(props) => (props.isPossible === true ? "#808F9D" : "#F7C52B")};
+  border-radius: 12px;
+  h2 {
+    width: 13px;
+    height: 10px;
+    left: 164px;
+    top: 254px;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.04em;
+    color: #000000;
+  }
+`;
+
+const BoxButton = styled.section`
+    display:flex;
+    flex-direction:column;
+    /* background-color: papayawhip; */
+    flex-wrap:wrap;
+    padding: 0 0 0 0;
+    margin-left: 0;
+    margin-right: 0;
+    align-items:center;
   button {
-    width: 26px;
-    height: 26px;
-    left: 24px;
-    top: 158px;
-    background: #c3cfd9;
-    border: 1px solid #808f9d;
-    border-radius: 12px;
-    h2{
-        width: 13px;
-height: 10px;
-left: 164px;
-top: 254px;
-
-font-family: 'Roboto';
-font-style: normal;
-font-weight: 400;
-font-size: 11px;
-line-height: 13px;
-display: flex;
-align-items: center;
-text-align: center;
-letter-spacing: 0.04em;
-
-color: #000000;
-
-    }
-
+    width: 25px;
+    height: 25px;
+    background: ${props => props.option === "selected" ? "#1aae9e" : props.option === "available" ? "#C3CFD9" : "#FBE192"};
+    border: 1px solid ${props => props.option === "selected" ? "#0E7D71" : props.option === "available" ? "#7B8B99" : "#F7C52B"};
+    border-radius: 17px;
+    margin-bottom:15px;
   }
+  h3 {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 15px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.013em;
+    color: #4e5a65;
+  }
+`;
+
+const BoxButtonDiv = styled.section`
+/* background-color:red; */
+display:flex;
+justify-content:space-evenly;
+flex-direction:row;
+margin-top:30px;
+margin-left:24px;
+margin-right:23px;
+flex-wrap:nowrap;
 `;
