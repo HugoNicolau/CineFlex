@@ -1,40 +1,95 @@
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
+import Schedule from "./Schedule";
 
-export default function Movie(props){
+export default function Movie() {
+  const { idMovie } = useParams();
+  const [movie, setMovie] = useState([]);
 
-    const params = useParams();
+  useEffect(() => {
+    URL = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${idMovie}/showtimes`;
+    const promise = axios.get(URL);
 
-    console.log(params.idMovie)
-    
-    const {id, title, img, overview, releaseDate} = props;
-    return(
-        <OneMovie>
-            <Link to={`/movie/${id}`}>
-        <img src={img} alt={title}/>
-        </Link>
-        </OneMovie>
-    )
+    promise.then((res) => {
+      setMovie(res.data.days);
+    });
+
+    promise.catch((err) => {
+      console.log(err.response.data, "erro");
+    });
+  }, []);
+
+  //   const { id, title, img, overview, releaseDate } = props;
+  console.log(movie, "Movie");
+  console.log(movie[0], "day0");
+
+  return (
+    <SecondScreen>
+      Selecionar o horário
+      <BoxSchedule>
+        {movie.map((m) => {
+          return (
+            <>
+              <h1>
+                {m.weekday} - {m.date}
+              </h1>
+
+              {m.showtimes.map((s) => (
+                <OrangeBox>{s.name}</OrangeBox>
+              ))}
+            </>
+          );
+        })}
+      </BoxSchedule>
+    </SecondScreen>
+  );
 }
 
+const SecondScreen = styled.div`
+  background-color: #ffffff;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px;
+  padding: 0px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.04em;
 
-const OneMovie = styled.div`
+  color: #293845;
+`;
 
-height: 209px;
-width: 145px;
-left: 30px;
-top: 169px;
-border-radius: 3px;
-background: #FFFFFF;
-box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
+const OrangeBox = styled.button`
+  
+  color: white;
+  width: 83px;
+  height: 43px;
+  background: #e8833a;
+  border-radius: 3px;
+`;
 
-
-img{
-    height: 193px;
-width: 129px;
-left: 38px;
-top: 177px;
-border-radius: 0px;
-
-}
-`
+const BoxSchedule = styled.div`
+  margin-top: 40px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #293845;
+`;
