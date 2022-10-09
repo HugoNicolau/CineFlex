@@ -6,15 +6,17 @@ import SessionFooter from "./SessionFooter";
 import loading from "./img/loading-gif.gif"
 import { Load } from "./Movie";
 
-export default function Session() {
+export default function Session(props) {
   const [sessionTickets, setSessionTickets] = useState([]);
   const [selectedButtons, setSelectedButtons] = useState([]);
+  const [selectedSeatsByName, setSelectedSeatsByName] = useState([]);
   const [buyerName, setBuyerName] = useState("")
   const [buyerCPF, setBuyerCPF] = useState("")
   const [footerInformation, setFooterInformation] = useState([]);
   const navigate = useNavigate();
-
   const params = useParams();
+
+  const {successInfo, setSuccessInfo} =props;
 
   useEffect(() => {
     const URL = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${params.idSession}/seats`;
@@ -22,15 +24,27 @@ export default function Session() {
     const promise = axios.get(URL);
     promise.then((res) => {
       setSessionTickets(res.data.seats);
-      setFooterInformation(res.data)
+      setFooterInformation(res.data);
+
+      const newObject = {title:res.data.movie.title, date:res.data.day.date, time:res.data.name}
+      setSuccessInfo(newObject)
+    
     });
     promise.catch((err) => {
       console.log(err.response.data);
     });
-  }, [params.idSession]);
+  }, [params.idSession, setSuccessInfo]);
 
-  function selectButton(id) {
+
+  
+  function selectButton(id, name) {
     let newArray = [...selectedButtons, id];
+    let newNameArray = [...selectedSeatsByName, name]
+
+    if(selectedSeatsByName.includes(name)){
+      newNameArray = newNameArray.filter((n) => n!== name)
+    }
+    setSelectedSeatsByName(newNameArray);
 
     if (selectedButtons.includes(id)) {
       newArray = newArray.filter((n) => n !== id);
@@ -46,11 +60,13 @@ export default function Session() {
         name: buyerName,
         cpf: buyerCPF
     }
-
+    const newArray = {...successInfo,tickets:selectedSeatsByName, name:buyerName, cpf:buyerCPF}
+    setSuccessInfo(newArray)
+    
     const promise = axios.post(URL, body)
     
     promise.then((res) => {
-        console.log(res.data)
+        
         navigate("/success/")
         
     })
@@ -59,7 +75,6 @@ export default function Session() {
     })
   }
 
-  console.log(footerInformation, "footerInfo")
   if (footerInformation.length === 0) {
     return (
       <Load>
@@ -79,7 +94,7 @@ export default function Session() {
                 isPossible={s.isAvailable}
                 isSelected={selectedButtons.includes(s.id)}
                 key={s.id}
-                onClick={() => selectButton(s.id)}
+                onClick={() => selectButton(s.id, s.name)}
               >
                 {s.id < 10 ? <h2>0{s.name}</h2> : <h2>{s.name}</h2>}
               </TicketButton>

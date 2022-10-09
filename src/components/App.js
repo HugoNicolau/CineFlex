@@ -5,9 +5,13 @@ import Movie from "./Movie";
 import Session from "./Session";
 import Success from "./Success";
 import GlobalStyle from "./GlobalStyle";
+import { useState } from "react";
 
 
 export default function App(){
+    const [successInfo, setSuccessInfo] = useState({title:"", date:"", time:"", tickets:[], name:"", cpf:""})
+
+    
 
     return(
         <BrowserRouter>
@@ -17,8 +21,8 @@ export default function App(){
 
         <Route path="/" element={<MainScreen/>}/>
         <Route path="/movie/:idMovie" element={<Movie/>}/>
-        <Route path="/session/:idSession" element={<Session/>}/>
-        <Route path="/success" element={<Success/>}/>
+        <Route path="/session/:idSession" element={<Session successInfo={successInfo} setSuccessInfo={setSuccessInfo} />}/>
+        <Route path="/success" element={<Success successInfo={successInfo}/>}/>
 
         </Routes>    
 

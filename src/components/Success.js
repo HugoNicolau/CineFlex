@@ -1,7 +1,8 @@
 import styled from "styled-components"
 
-export default function Success(){
+export default function Success(props){
 
+    console.log(props, "essas são as props de sucesso")
     return(
         <BoxSuccess>
             <h1>Pedido feito com sucesso!</h1>
@@ -19,6 +20,7 @@ export default function Success(){
             <h2>Comprador(a)</h2>
             <h3>Nome: Fulano de tal</h3>
             <h3>CPF: 123.456.789-10</h3>
+            <button>Voltar para a Home</button>
             
         </BoxSuccess>
     )
