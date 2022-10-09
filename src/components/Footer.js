@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export default function Footer(props) {
-  const {posterURL, title, id} = props;
+  const {posterURL, title } = props;
   return (
     <FooterDiv>
       

@@ -156,3 +156,5 @@ const Load = styled.div`
     width: 50px;
   }
 `;
+
+export {Load};

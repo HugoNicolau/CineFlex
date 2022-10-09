@@ -2,7 +2,9 @@ import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Footer from "./Footer";
+import SessionFooter from "./SessionFooter";
+import loading from "./img/loading-gif.gif"
+import { Load } from "./Movie";
 
 export default function Session() {
   const [sessionTickets, setSessionTickets] = useState([]);
@@ -58,6 +60,13 @@ export default function Session() {
   }
 
   console.log(footerInformation, "footerInfo")
+  if (footerInformation.length === 0) {
+    return (
+      <Load>
+        <img src={loading} alt="loading" />
+      </Load>
+    );
+  }
   
   return (
     <ContentBox>
@@ -108,7 +117,7 @@ export default function Session() {
           <button type="submit">Reservar assento(s)</button>
         </form>
       </Buy>
-      
+      <SessionFooter title={footerInformation.movie.title} posterURL={footerInformation.movie.posterURL} day={footerInformation.day.weekday} time={footerInformation.name}/>
     </ContentBox>
   );
 }
