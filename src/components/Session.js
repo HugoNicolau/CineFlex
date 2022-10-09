@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -8,6 +8,7 @@ export default function Session() {
   const [selectedButtons, setSelectedButtons] = useState([]);
   const [buyerName, setBuyerName] = useState("")
   const [buyerCPF, setBuyerCPF] = useState("")
+  const navigate = useNavigate();
 
   const params = useParams();
 
@@ -45,6 +46,8 @@ export default function Session() {
     
     promise.then((res) => {
         console.log(res.data)
+        navigate("/success/")
+        
     })
     promise.catch((err) => {
         console.log(err.response.data)
