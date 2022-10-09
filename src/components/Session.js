@@ -2,12 +2,14 @@ import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Footer from "./Footer";
 
 export default function Session() {
   const [sessionTickets, setSessionTickets] = useState([]);
   const [selectedButtons, setSelectedButtons] = useState([]);
   const [buyerName, setBuyerName] = useState("")
   const [buyerCPF, setBuyerCPF] = useState("")
+  const [footerInformation, setFooterInformation] = useState([])
   const navigate = useNavigate();
 
   const params = useParams();
@@ -18,6 +20,7 @@ export default function Session() {
     const promise = axios.get(URL);
     promise.then((res) => {
       setSessionTickets(res.data.seats);
+      setFooterInformation(res.data)
     });
     promise.catch((err) => {
       console.log(err.response.data);
@@ -103,6 +106,7 @@ export default function Session() {
           <button type="submit">Reservar assento(s)</button>
         </form>
       </Buy>
+      <Footer/>
     </ContentBox>
   );
 }

@@ -3,10 +3,14 @@ import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import loading from "./img/loading-gif.gif";
+import Footer from "./Footer"
 
 export default function Movie() {
-  const { idMovie } = useParams();
+  const params = useParams();
   const [movie, setMovie] = useState([]);
+  const [movieFooter, setMovieFooter] = useState([])
+
+  const {idMovie} = params;
 
   useEffect(() => {
    const URL = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${idMovie}/showtimes`;
@@ -14,6 +18,8 @@ export default function Movie() {
 
     promise.then((res) => {
       setMovie(res.data.days);
+      setMovieFooter(res.data)
+
     });
 
     promise.catch((err) => {
@@ -21,8 +27,9 @@ export default function Movie() {
     });
   }, [idMovie]);
 
-  //   const { id, title, img, overview, releaseDate } = props;
-  if (movie.length === 0) {
+  // const { id, title, img, overview, releaseDate } = props;
+  
+    if (movie.length === 0) {
     return (
       <Load>
         <img src={loading} alt="loading" />
@@ -55,6 +62,7 @@ export default function Movie() {
           );
         })}
       </BoxSchedule>
+      <Footer posterURL={movieFooter.posterURL} id={movieFooter.id} title={movieFooter.title}/>
     </SecondScreen>
   );
 }
@@ -119,6 +127,7 @@ const BoxSchedule = styled.div`
   color: #293845;
   padding-left: 23px;
   row-gap: 22px;
+  margin-bottom: 30px;
 `;
 
 const EachSchedule = styled.div`
