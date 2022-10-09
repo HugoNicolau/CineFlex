@@ -127,7 +127,7 @@ export default function Session(props) {
           <label htmlFor="nameField">Nome do comprador:</label>
           <input type="text" id="nameField" value={buyerName} onChange={e => setBuyerName(e.target.value)} placeholder="Digite seu nome..." required/>
           <label htmlFor="cpfField">CPF do comprador:</label>
-          <input type="text" pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" id="cpfField" value={buyerCPF} onChange={e => setBuyerCPF(e.target.value)} placeholder="Digite seu CPF..." required/>
+          <input type="text" pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" id="cpfField" value={buyerCPF.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")} onChange={e => setBuyerCPF(e.target.value)} placeholder="Digite seu CPF..." required/>
           <br />
           <button type="submit">Reservar assento(s)</button>
         </form>
