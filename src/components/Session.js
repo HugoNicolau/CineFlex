@@ -9,7 +9,7 @@ export default function Session() {
   const [selectedButtons, setSelectedButtons] = useState([]);
   const [buyerName, setBuyerName] = useState("")
   const [buyerCPF, setBuyerCPF] = useState("")
-  const [footerInformation, setFooterInformation] = useState([])
+  const [footerInformation, setFooterInformation] = useState([]);
   const navigate = useNavigate();
 
   const params = useParams();
@@ -57,6 +57,8 @@ export default function Session() {
     })
   }
 
+  console.log(footerInformation, "footerInfo")
+  
   return (
     <ContentBox>
       <h1>Selecione o(s) assento(s)</h1>
@@ -106,7 +108,7 @@ export default function Session() {
           <button type="submit">Reservar assento(s)</button>
         </form>
       </Buy>
-      <Footer/>
+      
     </ContentBox>
   );
 }
