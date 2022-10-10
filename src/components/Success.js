@@ -94,6 +94,7 @@ const BoxSuccess = styled.div`
 
         &:visited{
             text-decoration:none;
+            
         }
 
         &:hover{

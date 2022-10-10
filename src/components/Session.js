@@ -175,6 +175,10 @@ export default function Session(props) {
 const ContentBox = styled.div`
   margin-top: 70px;
   margin-bottom: 150px;
+  display:flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items:center;
 
   h1 {
     margin-top: 100px;
@@ -192,8 +196,12 @@ const ContentBox = styled.div`
   }
   div {
     margin-top: 30px;
+    max-width:350px;
+    /* min-width:323px; */
     display: flex;
     flex-wrap: wrap;
+    align-items:center;
+    justify-content:center;
     margin-left: 24px;
     margin-right: 24px;
     column-gap: 7px;
@@ -204,8 +212,7 @@ const ContentBox = styled.div`
 const TicketButton = styled.button`
   width: 26px;
   height: 26px;
-  left: 24px;
-  top: 158px;
+  
   background-color: ${(props) =>
     props.isPossible === true
       ? props.isSelected === true
