@@ -123,11 +123,17 @@ export default function Session(props) {
           <button />
           <h3>Selecionado</h3>
         </BoxButton>
-        <BoxButton option={"available"} data-identifier="seat-available-subtitle">
+        <BoxButton
+          option={"available"}
+          data-identifier="seat-available-subtitle"
+        >
           <button />
           <h3>Disponível</h3>
         </BoxButton>
-        <BoxButton option={"unavailable"} data-identifier="seat-unavailable-subtitle">
+        <BoxButton
+          option={"unavailable"}
+          data-identifier="seat-unavailable-subtitle"
+        >
           <button />
           <h3>Indisponível</h3>
         </BoxButton>
@@ -159,7 +165,9 @@ export default function Session(props) {
             required
           />
           <br />
-          <button data-identifier="reservation-btn" type="submit">Reservar assento(s)</button>
+          <button data-identifier="reservation-btn" type="submit">
+            Reservar assento(s)
+          </button>
         </form>
       </Buy>
       <SessionFooter
@@ -175,10 +183,10 @@ export default function Session(props) {
 const ContentBox = styled.div`
   margin-top: 70px;
   margin-bottom: 150px;
-  display:flex;
+  display: flex;
   flex-direction: column;
-  justify-content:center;
-  align-items:center;
+  justify-content: center;
+  align-items: center;
 
   h1 {
     margin-top: 100px;
@@ -196,12 +204,12 @@ const ContentBox = styled.div`
   }
   div {
     margin-top: 30px;
-    max-width:350px;
+    max-width: 350px;
     /* min-width:323px; */
     display: flex;
     flex-wrap: wrap;
-    align-items:center;
-    justify-content:center;
+    align-items: center;
+    justify-content: center;
     margin-left: 24px;
     margin-right: 24px;
     column-gap: 7px;
@@ -212,7 +220,7 @@ const ContentBox = styled.div`
 const TicketButton = styled.button`
   width: 26px;
   height: 26px;
-  
+
   background-color: ${(props) =>
     props.isPossible === true
       ? props.isSelected === true
@@ -286,7 +294,6 @@ const BoxButton = styled.section`
 `;
 
 const BoxButtonDiv = styled.section`
-  /* background-color:red; */
   display: flex;
   justify-content: space-evenly;
   flex-direction: row;
@@ -294,6 +301,7 @@ const BoxButtonDiv = styled.section`
   margin-left: 24px;
   margin-right: 23px;
   flex-wrap: nowrap;
+  column-gap:20px;
 `;
 
 const Buy = styled.section`

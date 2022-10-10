@@ -4,12 +4,11 @@ import Movies from "./Movies";
 export default function MainScreen() {
   return (
     <>
-  <Screen>
-    Selecione o filme
-  <Movies/>
-  </Screen>
-  
-  </>
+      <Screen>
+        Selecione o filme
+        <Movies />
+      </Screen>
+    </>
   );
 }
 

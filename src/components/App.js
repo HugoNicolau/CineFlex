@@ -8,7 +8,6 @@ import GlobalStyle from "./GlobalStyle";
 import ReturnButton from "./ReturnButton";
 import { useState } from "react";
 
-
 export default function App() {
   const [successInfo, setSuccessInfo] = useState({
     title: "",
@@ -23,7 +22,7 @@ export default function App() {
     <BrowserRouter>
       <GlobalStyle />
       <NavBar />
-      <ReturnButton/>
+      <ReturnButton />
       <Routes>
         <Route path="/" element={<MainScreen />} />
         <Route path="/movie/:idMovie" element={<Movie />} />

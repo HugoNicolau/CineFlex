@@ -3,23 +3,22 @@ import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import loading from "./img/loading-gif.gif";
-import Footer from "./Footer"
+import Footer from "./Footer";
 
 export default function Movie() {
   const params = useParams();
   const [movie, setMovie] = useState([]);
-  const [movieFooter, setMovieFooter] = useState([])
+  const [movieFooter, setMovieFooter] = useState([]);
 
-  const {idMovie} = params;
+  const { idMovie } = params;
 
   useEffect(() => {
-   const URL = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${idMovie}/showtimes`;
+    const URL = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${idMovie}/showtimes`;
     const promise = axios.get(URL);
 
     promise.then((res) => {
       setMovie(res.data.days);
-      setMovieFooter(res.data)
-
+      setMovieFooter(res.data);
     });
 
     promise.catch((err) => {
@@ -28,8 +27,8 @@ export default function Movie() {
   }, [idMovie]);
 
   // const { id, title, img, overview, releaseDate } = props;
-  
-    if (movie.length === 0) {
+
+  if (movie.length === 0) {
     return (
       <Load>
         <img src={loading} alt="loading" />
@@ -50,19 +49,22 @@ export default function Movie() {
 
               <div>
                 {m.showtimes.map((s) => (
-                  
-                    <Link key={s.id} to={`/session/${s.id}`}>
-                  <OrangeBox data-identifier="hour-minute-btn">
-                    {s.name}
-                  </OrangeBox>
-                    </Link>
+                  <Link key={s.id} to={`/session/${s.id}`}>
+                    <OrangeBox data-identifier="hour-minute-btn">
+                      {s.name}
+                    </OrangeBox>
+                  </Link>
                 ))}
               </div>
             </EachSchedule>
           );
         })}
       </BoxSchedule>
-      <Footer posterURL={movieFooter.posterURL} id={movieFooter.id} title={movieFooter.title}/>
+      <Footer
+        posterURL={movieFooter.posterURL}
+        id={movieFooter.id}
+        title={movieFooter.title}
+      />
     </SecondScreen>
   );
 }
@@ -157,4 +159,4 @@ const Load = styled.div`
   }
 `;
 
-export {Load};
+export { Load };
