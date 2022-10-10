@@ -11,22 +11,22 @@ export default function Success(props){
     return(
         <BoxSuccess>
             <h1>Pedido feito com sucesso!</h1>
-
+            
             <h2>Filme e Sessão</h2>
-            <h3>{title}</h3>
-            <h3>{date} {time}</h3>
+            <h3 data-identifier="movie-session-infos-reserve-finished">{title}</h3>
+            <h3 data-identifier="movie-session-infos-reserve-finished">{date} {time}</h3>
             <br/>
 
             <h2>Ingressos</h2>
-            {tickets.map((t, i) => <h3 key={i}>Assento {t}</h3>)}
+            {tickets.map((t, i) => <h3 data-identifier="seat-infos-reserve-finished" key={i}>Assento {t}</h3>)}
             
             <br/>
 
             <h2>Comprador(a)</h2>
-            <h3>Nome: {name}</h3>
-            <h3>CPF: {newCpf}</h3>
+            <h3 data-identifier="buyer-infos-reserve-finished">Nome: {name}</h3>
+            <h3 data-identifier="buyer-infos-reserve-finished">CPF: {newCpf}</h3>
             <Link to={"/"}>
-            <button>Voltar para a Home</button>
+            <button data-identifier="back-to-home-btn">Voltar para a Home</button>
             </Link>
         </BoxSuccess>
     )
@@ -90,9 +90,21 @@ const BoxSuccess = styled.div`
         color: #FFFFFF;
         border:none;
         justify-content:center;
+        text-decoration:none;
+        cursor:pointer;
+
+        &:visited{
+            text-decoration:none;
+        }
+
         &:hover{
             background: #ffa564;
 
         }
+    }
+    
+    a{
+        text-decoration:none;
+       
     }
 `

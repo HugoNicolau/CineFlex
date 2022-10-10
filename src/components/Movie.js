@@ -44,7 +44,7 @@ export default function Movie() {
         {movie.map((m) => {
           return (
             <EachSchedule key={m.id}>
-              <h1>
+              <h1 data-identifier="session-date">
                 {m.weekday} - {m.date}
               </h1>
 
@@ -52,7 +52,7 @@ export default function Movie() {
                 {m.showtimes.map((s) => (
                   
                     <Link key={s.id} to={`/session/${s.id}`}>
-                  <OrangeBox >
+                  <OrangeBox data-identifier="hour-minute-btn">
                     {s.name}
                   </OrangeBox>
                     </Link>

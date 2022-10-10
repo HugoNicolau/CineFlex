@@ -7,10 +7,10 @@ export default function Footer(props) {
       
         <>
           <div>
-            <img src={posterURL} alt={title} />
+            <img src={posterURL} alt={title} data-identifier="movie-img-preview"/>
           </div>
           <FooterInfo>
-          <h4>{title}</h4>
+          <h4 data-identifier="movie-and-session-infos-preview">{title}</h4>
           
           </FooterInfo>
         </>

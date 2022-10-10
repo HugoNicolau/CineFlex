@@ -10,7 +10,7 @@ export default function SessionFooter(props) {
           <ImagePart>
             <img src={posterURL} alt={title} />
           </ImagePart>
-          <SessionFooterInfo>
+          <SessionFooterInfo data-identifier="movie-and-session-infos-preview">
           <h4>{title}</h4>
           <h3>{day} - {time}</h3>
           

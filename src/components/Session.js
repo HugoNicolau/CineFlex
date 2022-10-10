@@ -3,20 +3,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import SessionFooter from "./SessionFooter";
-import loading from "./img/loading-gif.gif"
+import loading from "./img/loading-gif.gif";
 import { Load } from "./Movie";
 
 export default function Session(props) {
   const [sessionTickets, setSessionTickets] = useState([]);
   const [selectedButtons, setSelectedButtons] = useState([]);
   const [selectedSeatsByName, setSelectedSeatsByName] = useState([]);
-  const [buyerName, setBuyerName] = useState("")
-  const [buyerCPF, setBuyerCPF] = useState("")
+  const [buyerName, setBuyerName] = useState("");
+  const [buyerCPF, setBuyerCPF] = useState("");
   const [footerInformation, setFooterInformation] = useState([]);
   const navigate = useNavigate();
   const params = useParams();
 
-  const {successInfo, setSuccessInfo} =props;
+  const { successInfo, setSuccessInfo } = props;
 
   useEffect(() => {
     const URL = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${params.idSession}/seats`;
@@ -26,23 +26,24 @@ export default function Session(props) {
       setSessionTickets(res.data.seats);
       setFooterInformation(res.data);
 
-      const newObject = {title:res.data.movie.title, date:res.data.day.date, time:res.data.name}
-      setSuccessInfo(newObject)
-    
+      const newObject = {
+        title: res.data.movie.title,
+        date: res.data.day.date,
+        time: res.data.name,
+      };
+      setSuccessInfo(newObject);
     });
     promise.catch((err) => {
       console.log(err.response.data);
     });
   }, [params.idSession, setSuccessInfo]);
 
-
-  
   function selectButton(id, name) {
     let newArray = [...selectedButtons, id];
-    let newNameArray = [...selectedSeatsByName, name]
+    let newNameArray = [...selectedSeatsByName, name];
 
-    if(selectedSeatsByName.includes(name)){
-      newNameArray = newNameArray.filter((n) => n!== name)
+    if (selectedSeatsByName.includes(name)) {
+      newNameArray = newNameArray.filter((n) => n !== name);
     }
     setSelectedSeatsByName(newNameArray);
 
@@ -52,27 +53,31 @@ export default function Session(props) {
     setSelectedButtons(newArray);
   }
 
-  function buyTicket(e){
-    e.preventDefault()
-    const URL = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many"
+  function buyTicket(e) {
+    e.preventDefault();
+    const URL =
+      "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many";
     const body = {
-        ids: selectedButtons,
-        name: buyerName,
-        cpf: buyerCPF
-    }
-    const newArray = {...successInfo,tickets:selectedSeatsByName, name:buyerName, cpf:buyerCPF}
-    setSuccessInfo(newArray)
-    
-    const promise = axios.post(URL, body)
-    
+      ids: selectedButtons,
+      name: buyerName,
+      cpf: buyerCPF,
+    };
+    const newArray = {
+      ...successInfo,
+      tickets: selectedSeatsByName,
+      name: buyerName,
+      cpf: buyerCPF,
+    };
+    setSuccessInfo(newArray);
+
+    const promise = axios.post(URL, body);
+
     promise.then((res) => {
-        
-        navigate("/success/")
-        
-    })
+      navigate("/success/");
+    });
     promise.catch((err) => {
-        console.log(err.response.data)
-    })
+      console.log(err.response.data);
+    });
   }
 
   if (footerInformation.length === 0) {
@@ -82,7 +87,7 @@ export default function Session(props) {
       </Load>
     );
   }
-  
+
   return (
     <ContentBox>
       <h1>Selecione o(s) assento(s)</h1>
@@ -95,13 +100,18 @@ export default function Session(props) {
                 isSelected={selectedButtons.includes(s.id)}
                 key={s.id}
                 onClick={() => selectButton(s.id, s.name)}
+                data-identifier="seat"
               >
                 {s.id < 10 ? <h2>0{s.name}</h2> : <h2>{s.name}</h2>}
               </TicketButton>
             );
           else {
             return (
-              <TicketButton isPossible={s.isAvailable} key={s.id} onClick={()=> alert("Esse assento não está disponível")}>
+              <TicketButton
+                isPossible={s.isAvailable}
+                key={s.id}
+                onClick={() => alert("Esse assento não está disponível")}
+              >
                 {s.id < 10 ? <h2>0{s.name}</h2> : <h2>{s.name}</h2>}
               </TicketButton>
             );
@@ -109,15 +119,15 @@ export default function Session(props) {
         })}
       </div>
       <BoxButtonDiv>
-        <BoxButton option={"selected"}>
+        <BoxButton option={"selected"} data-identifier="seat-selected-subtitle">
           <button />
           <h3>Selecionado</h3>
         </BoxButton>
-        <BoxButton option={"available"}>
+        <BoxButton option={"available"} data-identifier="seat-available-subtitle">
           <button />
           <h3>Disponível</h3>
         </BoxButton>
-        <BoxButton option={"unavailable"}>
+        <BoxButton option={"unavailable"} data-identifier="seat-unavailable-subtitle">
           <button />
           <h3>Indisponível</h3>
         </BoxButton>
@@ -125,14 +135,39 @@ export default function Session(props) {
       <Buy>
         <form onSubmit={buyTicket}>
           <label htmlFor="nameField">Nome do comprador:</label>
-          <input type="text" id="nameField" value={buyerName} onChange={e => setBuyerName(e.target.value)} placeholder="Digite seu nome..." required/>
+          <input
+            type="text"
+            id="nameField"
+            data-identifier="buyer-name-input"
+            value={buyerName}
+            onChange={(e) => setBuyerName(e.target.value)}
+            placeholder="Digite seu nome..."
+            required
+          />
           <label htmlFor="cpfField">CPF do comprador:</label>
-          <input type="text" pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" id="cpfField" value={buyerCPF.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")} onChange={e => setBuyerCPF(e.target.value)} placeholder="Digite seu CPF..." required/>
+          <input
+            type="text"
+            data-identifier="buyer-cpf-input"
+            pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}"
+            id="cpfField"
+            value={buyerCPF.replace(
+              /(\d{3})(\d{3})(\d{3})(\d{2})/,
+              "$1.$2.$3-$4"
+            )}
+            onChange={(e) => setBuyerCPF(e.target.value)}
+            placeholder="Digite seu CPF..."
+            required
+          />
           <br />
-          <button type="submit">Reservar assento(s)</button>
+          <button data-identifier="reservation-btn" type="submit">Reservar assento(s)</button>
         </form>
       </Buy>
-      <SessionFooter title={footerInformation.movie.title} posterURL={footerInformation.movie.posterURL} day={footerInformation.day.weekday} time={footerInformation.name}/>
+      <SessionFooter
+        title={footerInformation.movie.title}
+        posterURL={footerInformation.movie.posterURL}
+        day={footerInformation.day.weekday}
+        time={footerInformation.name}
+      />
     </ContentBox>
   );
 }
@@ -141,7 +176,6 @@ const ContentBox = styled.div`
   margin-top: 70px;
   margin-bottom: 150px;
 
-  /* background-color: green; */
   h1 {
     margin-top: 100px;
     font-family: "Roboto";
@@ -154,8 +188,6 @@ const ContentBox = styled.div`
     text-align: center;
     letter-spacing: 0.04em;
     justify-content: center;
-    /* background-color:blue; */
-
     color: #293845;
   }
   div {
@@ -183,10 +215,8 @@ const TicketButton = styled.button`
   border: 1px solid
     ${(props) => (props.isPossible === true ? "#808F9D" : "#F7C52B")};
   border-radius: 12px;
-  &:hover{
-
-  cursor : ${props => props.isPossible === true ? "pointer" : ""}
-  
+  &:hover {
+    cursor: ${(props) => (props.isPossible === true ? "pointer" : "")};
   }
 
   h2 {
@@ -272,19 +302,18 @@ const Buy = styled.section`
     border: 1px solid #d5d5d5;
     border-radius: 3px;
     margin-bottom: 10px;
-    margin-top:3px;
-    font-family: 'Roboto';
+    margin-top: 3px;
+    font-family: "Roboto";
     font-style: italic;
     font-weight: 400;
     font-size: 18px;
     line-height: 21px;
-    color:#293845;
-    padding-left:18px;
+    color: #293845;
+    padding-left: 18px;
 
-    &:placeholder{
-        color: #AFAFAF;
+    &:placeholder {
+      color: #afafaf;
     }
-
   }
   label {
     font-family: "Roboto";
@@ -294,12 +323,12 @@ const Buy = styled.section`
     line-height: 21px;
     color: #293845;
   }
-  button{
+  button {
     width: 225px;
     height: 42px;
-    background: #E8833A;
+    background: #e8833a;
     border-radius: 3px;
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -308,17 +337,16 @@ const Buy = styled.section`
     align-items: center;
     text-align: center;
     letter-spacing: 0.04em;
-    color: #FFFFFF;
-    display:flex;
-    justify-content:center;
-    margin-left:auto;
-    margin-right:auto;
-    border:none;
-    margin-top:57px;
-    &:hover{
-        cursor:pointer;
-        background-color:#fc9a55;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    margin-top: 57px;
+    &:hover {
+      cursor: pointer;
+      background-color: #fc9a55;
     }
-
   }
 `;

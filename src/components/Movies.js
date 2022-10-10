@@ -37,6 +37,7 @@ export default function Movies() {
         <Link key={f.id} to={`/movie/${f.id}`}>
           {" "}
           <OneMovie
+            data-identifier="movie-outdoor"
             id={f.id}
             title={f.title}
             img={f.posterURL}
