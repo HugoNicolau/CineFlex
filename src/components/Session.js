@@ -102,7 +102,7 @@ export default function Session(props) {
                 onClick={() => selectButton(s.id, s.name)}
                 data-identifier="seat"
               >
-                {s.id < 10 ? <h2>0{s.name}</h2> : <h2>{s.name}</h2>}
+                {s.name < 10 ? <h2>0{s.name}</h2> : <h2>{s.name}</h2>}
               </TicketButton>
             );
           else {
@@ -112,7 +112,7 @@ export default function Session(props) {
                 key={s.id}
                 onClick={() => alert("Esse assento não está disponível")}
               >
-                {s.id < 10 ? <h2>0{s.name}</h2> : <h2>{s.name}</h2>}
+                {s.name < 10 ? <h2>0{s.name}</h2> : <h2>{s.name}</h2>}
               </TicketButton>
             );
           }

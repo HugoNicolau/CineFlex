@@ -9,6 +9,7 @@ export default function OneMovie(props) {
       
         <img src={img} alt={title} />
         
+        
       
     </EachMovie>
   );
@@ -33,4 +34,5 @@ const EachMovie = styled.div`
     top: 177px;
     border-radius: 0px;
   }
+  
 `;
