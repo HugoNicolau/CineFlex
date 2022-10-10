@@ -3,7 +3,6 @@ import styled from "styled-components"
 
 export default function Success(props){
 
-    console.log(props, "essas são as props de sucesso")
     const {cpf, date, name, time, title, tickets} = props.successInfo;
    
     const  newCpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")

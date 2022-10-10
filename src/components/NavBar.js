@@ -3,7 +3,10 @@ import styled from "styled-components"
 export default function NavBar(){
 
     return(
-        <Bar>CINEFLEX</Bar>
+        <Bar>CINEFLEX 
+            <br/>
+            
+        </Bar>
     )
 }
 
@@ -25,8 +28,8 @@ line-height: 40px;
 display: flex;
 align-items: center;
 text-align: center;
-
 color: #E8833A;
+z-index:4;
 
 
 `
